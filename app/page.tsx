@@ -215,7 +215,7 @@ export default function Home() {
         </div>
 
      <button 
-  onClick={() => window.location.href = `/success?amount=${totalAmount.toFixed(2)}`}
+  onClick={() => window.location.href = `/success?amount=${totalAmount.toFixed(2)}&lang=${lang}`}
   className="w-full bg-slate-900 hover:bg-black text-white font-bold py-4 rounded-xl shadow-md transition-transform active:scale-[0.99] flex items-center justify-center gap-2"
 >
   <span>Pay / GPay / Bizum</span>
