@@ -1,14 +1,23 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
-export default function SuccessPage() {
+function SuccessContent() {
+  const searchParams = useSearchParams();
+  const [totalPaid, setTotalPaid] = useState<string>('34.50');
   const [rating, setRating] = useState<number | null>(null);
   const [feedbackSent, setFeedbackSent] = useState<boolean>(false);
   const [feedbackText, setFeedbackText] = useState<string>('');
 
-  // Reemplazar con el enlace real de la ficha de Google Maps del restaurante
+  useEffect(() => {
+    const amount = searchParams.get('amount');
+    if (amount) {
+      setTotalPaid(amount);
+    }
+  }, [searchParams]);
+
   const googleMapsUrl = "https://maps.google.com";
 
   const handleFeedbackSubmit = (e: React.FormEvent) => {
@@ -30,7 +39,7 @@ export default function SuccessPage() {
           
           <div className="bg-slate-50 p-3 rounded-xl text-xs text-slate-600 flex justify-between items-center mb-2">
             <span>Total pagado:</span>
-            <span className="font-bold text-slate-900 text-sm">34.50 €</span>
+            <span className="font-bold text-slate-900 text-base">{totalPaid} €</span>
           </div>
           <p className="text-[11px] text-slate-400">Hemos enviado el recibo digital a tu banco / Apple Pay.</p>
         </div>
@@ -119,5 +128,13 @@ export default function SuccessPage() {
       </div>
 
     </main>
+  );
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={<div className="p-4 text-center text-xs text-slate-500">Cargando comprobante...</div>}>
+      <SuccessContent />
+    </Suspense>
   );
 }
