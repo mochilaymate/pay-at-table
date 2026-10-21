@@ -214,10 +214,10 @@ export default function Home() {
           <span className="text-2xl font-black text-slate-900">{totalAmount.toFixed(2)} €</span>
         </div>
 
-        <button 
-          onClick={() => alert('Simulación de pago iniciada')}
-          className="w-full bg-slate-900 hover:bg-black text-white font-bold py-4 rounded-xl shadow-md transition-transform active:scale-[0.99] flex items-center justify-center gap-2"
-        >
+      <button 
+  onClick={() => window.location.href = '/success'}
+  className="w-full bg-slate-900 hover:bg-black text-white font-bold py-4 rounded-xl shadow-md transition-transform active:scale-[0.99] flex items-center justify-center gap-2"
+>
           <span>Pay / GPay / Bizum</span>
           <span>•</span>
           <span>{t.payButton}</span>
