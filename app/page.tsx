@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import StripePaymentForm from '../components/StripePaymentForm';
 
-// Inicializar Stripe con la llave pública
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 
 const translations: Record<string, any> = {
@@ -21,7 +21,6 @@ const translations: Record<string, any> = {
     noTip: 'Continuar sin propina',
     totalToPay: 'Total a pagar',
     payButton: 'Pagar ahora',
-    table: 'Mesa 04',
   },
   en: {
     title: 'Bill summary',
@@ -35,7 +34,6 @@ const translations: Record<string, any> = {
     noTip: 'Continue without tip',
     totalToPay: 'Total to pay',
     payButton: 'Pay now',
-    table: 'Table 04',
   },
   fr: {
     title: 'Résumé de l\'addition',
@@ -49,7 +47,6 @@ const translations: Record<string, any> = {
     noTip: 'Continuer sans pourboire',
     totalToPay: 'Total à payer',
     payButton: 'Payer maintenant',
-    table: 'Table 04',
   },
   de: {
     title: 'Rechnungsübersicht',
@@ -63,20 +60,33 @@ const translations: Record<string, any> = {
     noTip: 'Ohne Trinkgeld fortfahren',
     totalToPay: 'Gesamtbetrag',
     payButton: 'Jetzt bezahlen',
-    table: 'Tisch 04',
   }
 };
 
-export default function Home() {
+function HomeContent() {
+  const searchParams = useSearchParams();
   const [lang, setLang] = useState<string>('es');
-  const [baseAmount] = useState<number>(30.00);
+  
+  // Datos dinámicos recibidos por la URL (simulando el ticket del restaurante)
+  const [tableId, setTableId] = useState<string>('Mesa 04');
+  const [baseAmount, setBaseAmount] = useState<number>(34.50);
+
   const [selectedPercentage, setSelectedPercentage] = useState<number | null>(15);
   const [customTip, setCustomTip] = useState<string>('');
   const [isCustom, setIsCustom] = useState<boolean>(false);
   
-  // Estado para gestionar Stripe Checkout
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [isLoadingCheckout, setIsLoadingCheckout] = useState<boolean>(false);
+
+  useEffect(() => {
+    const mesa = searchParams.get('mesa');
+    const total = searchParams.get('total');
+    if (mesa) setTableId(`Mesa ${mesa}`);
+    if (total) {
+      const parsed = parseFloat(total);
+      if (!isNaN(parsed)) setBaseAmount(parsed);
+    }
+  }, [searchParams]);
 
   const t = translations[lang] || translations.es;
 
@@ -94,7 +104,6 @@ export default function Home() {
   const tipAmount = getTipAmount();
   const totalAmount = baseAmount + tipAmount;
 
-  // Iniciar proceso de pago con la API
   const handleStartPayment = async () => {
     setIsLoadingCheckout(true);
     try {
@@ -104,7 +113,7 @@ export default function Home() {
         body: JSON.stringify({
           amount: baseAmount,
           tipAmount: tipAmount,
-          tableId: t.table,
+          tableId: tableId,
           lang: lang,
         }),
       });
@@ -113,11 +122,11 @@ export default function Home() {
       if (data.clientSecret) {
         setClientSecret(data.clientSecret);
       } else {
-        alert('Error al inicializar la pasarela de pago. Verifica tus claves de Stripe.');
+        alert('Error al inicializar la pasarela de pago.');
       }
     } catch (error) {
       console.error(error);
-      alert('Error de conexión con el servidor de pago.');
+      alert('Error de conexión con el servidor.');
     } finally {
       setIsLoadingCheckout(false);
     }
@@ -126,10 +135,14 @@ export default function Home() {
   return (
     <main className="max-w-md mx-auto min-h-screen bg-slate-50 p-4 font-sans text-slate-800 flex flex-col justify-between">
       <div>
-        {/* Selector de idioma y mesa */}
+        {/* Cabecera: Nombre ficticio del Restaurante + Mesa + Idioma */}
+        <div className="text-center mb-4 pt-2">
+          <h2 className="text-xs font-black tracking-widest text-indigo-600 uppercase">☕ La Tartería de Marbella</h2>
+        </div>
+
         <div className="flex justify-between items-center mb-4">
           <span className="bg-slate-200 text-slate-700 font-semibold text-xs px-3 py-1 rounded-full">
-            {t.table}
+            {tableId}
           </span>
           <select
             value={lang}
@@ -143,7 +156,7 @@ export default function Home() {
           </select>
         </div>
 
-        {/* Card Resumen de Cuenta */}
+        {/* Resumen de la cuenta */}
         <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 mb-4">
           <h1 className="text-lg font-extrabold text-slate-900 mb-3">{t.title}</h1>
           <div className="flex justify-between items-center text-sm mb-2 text-slate-600">
@@ -158,7 +171,7 @@ export default function Home() {
           )}
         </div>
 
-        {/* Card Módulo de Propina */}
+        {/* Propina */}
         <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 mb-6">
           <h2 className="text-sm font-bold text-slate-900 mb-1">{t.askTip}</h2>
           <p className="text-xs text-slate-500 mb-4">{t.tipSub}</p>
@@ -231,7 +244,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Pie con Total y Formulario Modal de Pago */}
+      {/* Botón de Pago / Stripe */}
       <div className="bg-white p-5 rounded-2xl shadow-lg border border-slate-100">
         {!clientSecret ? (
           <div>
@@ -267,5 +280,13 @@ export default function Home() {
         )}
       </div>
     </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div className="p-4 text-center text-xs text-slate-500">Cargando...</div>}>
+      <HomeContent />
+    </Suspense>
   );
 }
