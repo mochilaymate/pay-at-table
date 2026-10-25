@@ -10,6 +10,7 @@ const translations = {
     table: 'Mesa',
     itemsTitle: 'Detalle de la cuenta',
     subtotal: 'Subtotal',
+    tipLabel: 'Propina',
     tipTitle: '¿Quieres dejar propina al equipo?',
     tipSubtitle: 'Tu propina se reparte 100% entre cocina y sala.',
     recommendedBadge: 'Recomendado ⭐',
@@ -29,6 +30,7 @@ const translations = {
     table: 'Table',
     itemsTitle: 'Bill details',
     subtotal: 'Subtotal',
+    tipLabel: 'Tip',
     tipTitle: 'Would you like to tip the team?',
     tipSubtitle: 'Tips are shared 100% among kitchen and front-of-house staff.',
     recommendedBadge: 'Recommended ⭐',
@@ -48,6 +50,7 @@ const translations = {
     table: 'Table',
     itemsTitle: 'Détail de la note',
     subtotal: 'Sous-total',
+    tipLabel: 'Pourboire',
     tipTitle: 'Souhaitez-vous laisser un pourboire ?',
     tipSubtitle: 'Les pourboires sont partagés à 100% entre l’équipe.',
     recommendedBadge: 'Recommandé ⭐',
@@ -67,6 +70,7 @@ const translations = {
     table: 'Tisch',
     itemsTitle: 'Rechnungsdetails',
     subtotal: 'Zwischensumme',
+    tipLabel: 'Trinkgeld',
     tipTitle: 'Möchten Sie Trinkgeld geben?',
     tipSubtitle: 'Trinkgelder werden zu 100% an das Team verteilt.',
     recommendedBadge: 'Empfohlen ⭐',
@@ -91,7 +95,7 @@ function PaymentPage() {
   const baseTotalParam = parseFloat(searchParams.get('total') || '19.00');
 
   const [lang, setLang] = useState<Lang>('es');
-  const [tipType, setTipType] = useState<'percent' | 'custom' | 'none'>( 'percent' );
+  const [tipType, setTipType] = useState<'percent' | 'custom' | 'none'>('percent');
   const [tipValue, setTipValue] = useState<number>(15); // 15% por defecto recomendado
   const [customInput, setCustomInput] = useState<string>('');
 
@@ -138,7 +142,7 @@ function PaymentPage() {
           </p>
         </div>
 
-        {/* Detalle de consumos */}
+        {/* Detalle de consumos y subtotales */}
         <div className="bg-gray-50 rounded-2xl p-4 mb-4 border border-gray-100 text-left">
           <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
             {t.itemsTitle}
@@ -151,10 +155,21 @@ function PaymentPage() {
               </div>
             ))}
           </div>
+
           <div className="border-t border-dashed border-gray-200 my-3"></div>
-          <div className="flex justify-between text-sm font-semibold text-gray-600">
-            <span>{t.subtotal}</span>
-            <span>{baseTotalParam.toFixed(2)} €</span>
+
+          <div className="space-y-1.5 text-sm">
+            <div className="flex justify-between font-semibold text-gray-600">
+              <span>{t.subtotal}</span>
+              <span>{baseTotalParam.toFixed(2)} €</span>
+            </div>
+            
+            {tipAmount > 0 && (
+              <div className="flex justify-between font-semibold text-amber-600 animate-fadeIn">
+                <span>+ {t.tipLabel} ({tipType === 'percent' ? `${tipValue}%` : 'Extra'})</span>
+                <span>+{tipAmount.toFixed(2)} €</span>
+              </div>
+            )}
           </div>
         </div>
 
