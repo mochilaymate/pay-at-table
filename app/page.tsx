@@ -25,11 +25,11 @@ const translations = {
     reviewPublicText: '¿Te importaría dejarnos una reseña positiva en Google para ayudarnos a crecer?',
     reviewPublicBtn: 'Dejar reseña en Google ⭐',
     reviewPrivateTitle: 'Lamentamos que tu experiencia no haya sido perfecta',
-    reviewPrivateText: 'Cuéntanos qué ha fallado. Este mensaje es privado y va directo al dueño del local para solucionarlo.',
+    reviewPrivateText: 'Cuéntanos qué ha fallado. Este mensaje va directo al dueño del local para solucionarlo.',
     reviewPrivatePlaceholder: 'Escribe tus comentarios aquí...',
-    sendFeedbackBtn: 'Enviar comentario privado',
+    sendFeedbackBtn: 'Enviar comentario al dueño',
     feedbackSentTitle: '¡Gracias por tus comentarios!',
-    feedbackSentText: 'El equipo directivo ha recibido tu mensaje. ¡Esperamos verte pronto de nuevo!',
+    feedbackSentText: 'El dueño ha recibido tu mensaje directamente. ¡Esperamos verte pronto de nuevo!',
     items: [
       { name: '2x Gambas Pil Pil', price: '15.00 €' },
       { name: '1x Coca Cola', price: '2.50 €' },
@@ -57,11 +57,11 @@ const translations = {
     reviewPublicText: 'Would you mind leaving us a positive review on Google to help us grow?',
     reviewPublicBtn: 'Leave a Google Review ⭐',
     reviewPrivateTitle: 'We are sorry your experience wasn’t perfect',
-    reviewPrivateText: 'Tell us what went wrong. This message is private and goes directly to the owner.',
+    reviewPrivateText: 'Tell us what went wrong. This message goes directly to the owner to fix it.',
     reviewPrivatePlaceholder: 'Write your feedback here...',
-    sendFeedbackBtn: 'Send private feedback',
+    sendFeedbackBtn: 'Send feedback to the owner',
     feedbackSentTitle: 'Thank you for your feedback!',
-    feedbackSentText: 'Management has received your message. We hope to see you again soon!',
+    feedbackSentText: 'The owner has received your message directly. We hope to see you again soon!',
     items: [
       { name: '2x Gambas Pil Pil', price: '15.00 €' },
       { name: '1x Coca Cola', price: '2.50 €' },
@@ -86,14 +86,14 @@ const translations = {
     ratingTitle: 'Comment s’est passée votre expérience ?',
     ratingSubtitle: 'Votre avis nous aide à nous améliorer chaque jour.',
     reviewPublicTitle: 'Nous sommes ravis !',
-    reviewPublicText: 'isseriez-vous nous laisser un avis positif sur Google ?',
+    reviewPublicText: 'Auriez-vous l’amabilité de nous laisser un avis positif sur Google ?',
     reviewPublicBtn: 'Laisser un avis Google ⭐',
     reviewPrivateTitle: 'Nous sommes désolés que votre expérience n’ait pas été parfaite',
-    reviewPrivateText: 'Dites-nous ce qui n’a pas fonctionné. Ce message est privé et va directement au propriétaire.',
+    reviewPrivateText: 'Dites-nous ce qui n’a pas fonctionné. Ce message va directement au propriétaire.',
     reviewPrivatePlaceholder: 'Écrivez vos commentaires ici...',
-    sendFeedbackBtn: 'Envoyer un commentaire privé',
+    sendFeedbackBtn: 'Envoyer au propriétaire',
     feedbackSentTitle: 'Merci pour vos commentaires !',
-    feedbackSentText: 'La direction a bien reçu votre message. À bientôt !',
+    feedbackSentText: 'Le propriétaire a bien reçu votre message. À bientôt !',
     items: [
       { name: '2x Gambas Pil Pil', price: '15.00 €' },
       { name: '1x Coca Cola', price: '2.50 €' },
@@ -121,11 +121,11 @@ const translations = {
     reviewPublicText: 'Würden Sie uns eine positive Google-Bewertung hinterlassen?',
     reviewPublicBtn: 'Google-Bewertung hinterlassen ⭐',
     reviewPrivateTitle: 'Es tut uns leid, dass Ihre Erfahrung nicht perfekt war',
-    reviewPrivateText: 'Teilen Sie uns mit, was schiefgelaufen ist. Diese Nachricht ist privat und geht direkt an den Inhaber.',
+    reviewPrivateText: 'Teilen Sie uns mit, was schiefgelaufen ist. Diese Nachricht geht direkt an den Inhaber.',
     reviewPrivatePlaceholder: 'Schreiben Sie hier Ihr Feedback...',
-    sendFeedbackBtn: 'Privates Feedback senden',
+    sendFeedbackBtn: 'Feedback an den Inhaber senden',
     feedbackSentTitle: 'Vielen Dank für Ihr Feedback!',
-    feedbackSentText: 'Die Geschäftsführung hat Ihre Nachricht erhalten. Bis bald!',
+    feedbackSentText: 'Der Inhaber hat Ihre Nachricht direkt erhalten. Bis bald!',
     items: [
       { name: '2x Gambas Pil Pil', price: '15.00 €' },
       { name: '1x Coca Cola', price: '2.50 €' },
@@ -146,7 +146,6 @@ function PaymentPage() {
   const [tipValue, setTipValue] = useState<number>(15);
   const [customInput, setCustomInput] = useState<string>('');
 
-  // Estados de flujo de pago y feedback
   const [isPaid, setIsPaid] = useState<boolean>(false);
   const [rating, setRating] = useState<number | null>(null);
   const [privateComment, setPrivateComment] = useState<string>('');
@@ -360,7 +359,7 @@ function PaymentPage() {
                   </div>
                 )}
 
-                {/* Si selecciona 3 estrellas o menos: Comentario Privado al Dueño */}
+                {/* Si selecciona 3 estrellas o menos: Comentario directo al dueño */}
                 {rating !== null && rating <= 3 && (
                   <div className="bg-amber-50/70 rounded-xl p-3 border border-amber-200 animate-fadeIn space-y-2">
                     <p className="text-xs font-bold text-amber-900">{t.reviewPrivateTitle}</p>
