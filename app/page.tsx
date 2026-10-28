@@ -7,8 +7,14 @@ const translations = {
   es: {
     restaurantName: 'MIA CAFE',
     table: 'Mesa',
+    splitTitle: '¿Cómo quieres pagar?',
+    splitFull: 'Cuenta completa',
+    splitEqual: 'Dividir en partes iguales',
+    splitCustom: 'Pagar por consumos',
+    peopleLabel: 'Personas:',
+    selectItemsLabel: 'Selecciona lo que consumiste:',
     itemsTitle: 'Detalle de la cuenta',
-    subtotal: 'Subtotal',
+    subtotal: 'Subtotal a tu cargo',
     tipLabel: 'Propina',
     tipTitle: '¿Quieres dejar propina al equipo?',
     tipSubtitle: 'Tu propina se reparte 100% entre cocina y sala.',
@@ -31,16 +37,22 @@ const translations = {
     feedbackSentTitle: '¡Gracias por tus comentarios!',
     feedbackSentText: 'El dueño ha recibido tu mensaje directamente. ¡Esperamos verte pronto de nuevo!',
     items: [
-      { name: '2x Gambas Pil Pil', price: '15.00 €' },
-      { name: '1x Coca Cola', price: '2.50 €' },
-      { name: '1x Pan', price: '1.50 €' }
+      { id: 1, name: '2x Gambas Pil Pil', price: 15.00 },
+      { id: 2, name: '1x Coca Cola', price: 2.50 },
+      { id: 3, name: '1x Pan', price: 1.50 }
     ]
   },
   en: {
     restaurantName: 'MIA CAFE',
     table: 'Table',
+    splitTitle: 'How would you like to pay?',
+    splitFull: 'Full bill',
+    splitEqual: 'Split equally',
+    splitCustom: 'Pay by item',
+    peopleLabel: 'People:',
+    selectItemsLabel: 'Select what you had:',
     itemsTitle: 'Bill details',
-    subtotal: 'Subtotal',
+    subtotal: 'Your subtotal',
     tipLabel: 'Tip',
     tipTitle: 'Would you like to tip the team?',
     tipSubtitle: 'Tips are shared 100% among kitchen and front-of-house staff.',
@@ -63,16 +75,22 @@ const translations = {
     feedbackSentTitle: 'Thank you for your feedback!',
     feedbackSentText: 'The owner has received your message directly. We hope to see you again soon!',
     items: [
-      { name: '2x Gambas Pil Pil', price: '15.00 €' },
-      { name: '1x Coca Cola', price: '2.50 €' },
-      { name: '1x Pan', price: '1.50 €' }
+      { id: 1, name: '2x Gambas Pil Pil', price: 15.00 },
+      { id: 2, name: '1x Coca Cola', price: 2.50 },
+      { id: 3, name: '1x Pan', price: 1.50 }
     ]
   },
   fr: {
     restaurantName: 'MIA CAFE',
     table: 'Table',
+    splitTitle: 'Comment souhaitez-vous payer ?',
+    splitFull: 'Note complète',
+    splitEqual: 'Diviser également',
+    splitCustom: 'Payer par article',
+    peopleLabel: 'Personnes :',
+    selectItemsLabel: 'Sélectionnez vos consommations :',
     itemsTitle: 'Détail de la note',
-    subtotal: 'Sous-total',
+    subtotal: 'Votre sous-total',
     tipLabel: 'Pourboire',
     tipTitle: 'Souhaitez-vous laisser un pourboire ?',
     tipSubtitle: 'Les pourboires sont partagés à 100% entre l’équipe.',
@@ -95,16 +113,22 @@ const translations = {
     feedbackSentTitle: 'Merci pour vos commentaires !',
     feedbackSentText: 'Le propriétaire a bien reçu votre message. À bientôt !',
     items: [
-      { name: '2x Gambas Pil Pil', price: '15.00 €' },
-      { name: '1x Coca Cola', price: '2.50 €' },
-      { name: '1x Pan', price: '1.50 €' }
+      { id: 1, name: '2x Gambas Pil Pil', price: 15.00 },
+      { id: 2, name: '1x Coca Cola', price: 2.50 },
+      { id: 3, name: '1x Pan', price: 1.50 }
     ]
   },
   de: {
     restaurantName: 'MIA CAFE',
     table: 'Tisch',
+    splitTitle: 'Wie möchten Sie bezahlen?',
+    splitFull: 'Gesamte Rechnung',
+    splitEqual: 'Gleichmäßig teilen',
+    splitCustom: 'Nach Einzelposten bezahlen',
+    peopleLabel: 'Personen:',
+    selectItemsLabel: 'Wählen Sie Ihre Bestelldetails:',
     itemsTitle: 'Rechnungsdetails',
-    subtotal: 'Zwischensumme',
+    subtotal: 'Ihr Zwischensumme',
     tipLabel: 'Trinkgeld',
     tipTitle: 'Möchten Sie Trinkgeld geben?',
     tipSubtitle: 'Trinkgelder werden zu 100% an das Team verteilt.',
@@ -127,14 +151,15 @@ const translations = {
     feedbackSentTitle: 'Vielen Dank für Ihr Feedback!',
     feedbackSentText: 'Der Inhaber hat Ihre Nachricht direkt erhalten. Bis bald!',
     items: [
-      { name: '2x Gambas Pil Pil', price: '15.00 €' },
-      { name: '1x Coca Cola', price: '2.50 €' },
-      { name: '1x Pan', price: '1.50 €' }
+      { id: 1, name: '2x Gambas Pil Pil', price: 15.00 },
+      { id: 2, name: '1x Coca Cola', price: 2.50 },
+      { id: 3, name: '1x Pan', price: 1.50 }
     ]
   }
 };
 
 type Lang = 'es' | 'en' | 'fr' | 'de';
+type SplitMode = 'full' | 'equal' | 'custom';
 
 function PaymentPage() {
   const searchParams = useSearchParams();
@@ -142,6 +167,10 @@ function PaymentPage() {
   const baseTotalParam = parseFloat(searchParams.get('total') || '19.00');
 
   const [lang, setLang] = useState<Lang>('es');
+  const [splitMode, setSplitMode] = useState<SplitMode>('full');
+  const [splitPeople, setSplitPeople] = useState<number>(2);
+  const [selectedItems, setSelectedItems] = useState<number[]>([1, 2, 3]);
+
   const [tipType, setTipType] = useState<'percent' | 'custom' | 'none'>('percent');
   const [tipValue, setTipValue] = useState<number>(15);
   const [customInput, setCustomInput] = useState<string>('');
@@ -153,14 +182,33 @@ function PaymentPage() {
 
   const t = translations[lang];
 
+  // Cálculo de Subtotal según modo de división
+  let userSubtotal = baseTotalParam;
+  if (splitMode === 'equal') {
+    userSubtotal = baseTotalParam / (splitPeople || 1);
+  } else if (splitMode === 'custom') {
+    userSubtotal = t.items
+      .filter((item) => selectedItems.includes(item.id))
+      .reduce((acc, item) => acc + item.price, 0);
+  }
+
+  // Cálculo de Propina sobre el Subtotal del cliente
   let tipAmount = 0;
   if (tipType === 'percent') {
-    tipAmount = (baseTotalParam * tipValue) / 100;
+    tipAmount = (userSubtotal * tipValue) / 100;
   } else if (tipType === 'custom') {
     tipAmount = parseFloat(customInput) || 0;
   }
 
-  const finalTotal = (baseTotalParam + tipAmount).toFixed(2);
+  const finalTotal = (userSubtotal + tipAmount).toFixed(2);
+
+  const toggleItem = (id: number) => {
+    if (selectedItems.includes(id)) {
+      setSelectedItems(selectedItems.filter((i) => i !== id));
+    } else {
+      setSelectedItems([...selectedItems, id]);
+    }
+  };
 
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
@@ -183,8 +231,8 @@ function PaymentPage() {
           ))}
         </div>
 
-        {/* Cabecera del Bar */}
-        <div className="text-center mb-5">
+        {/* Cabecera */}
+        <div className="text-center mb-4">
           <h1 className="text-2xl font-black text-gray-900 tracking-tight">
             {t.restaurantName}
           </h1>
@@ -195,26 +243,90 @@ function PaymentPage() {
 
         {!isPaid ? (
           <>
+            {/* Opciones de División de Cuenta */}
+            <div className="bg-gray-100 p-1.5 rounded-2xl mb-4 flex text-[11px] font-bold">
+              <button
+                onClick={() => setSplitMode('full')}
+                className={`flex-1 py-2 rounded-xl transition ${
+                  splitMode === 'full' ? 'bg-white text-black shadow-sm' : 'text-gray-500'
+                }`}
+              >
+                {t.splitFull}
+              </button>
+              <button
+                onClick={() => setSplitMode('equal')}
+                className={`flex-1 py-2 rounded-xl transition ${
+                  splitMode === 'equal' ? 'bg-white text-black shadow-sm' : 'text-gray-500'
+                }`}
+              >
+                {t.splitEqual}
+              </button>
+              <button
+                onClick={() => setSplitMode('custom')}
+                className={`flex-1 py-2 rounded-xl transition ${
+                  splitMode === 'custom' ? 'bg-white text-black shadow-sm' : 'text-gray-500'
+                }`}
+              >
+                {t.splitCustom}
+              </button>
+            </div>
+
+            {/* Ajuste según el modo de división */}
+            {splitMode === 'equal' && (
+              <div className="bg-amber-50/60 p-3 rounded-2xl mb-4 border border-amber-100 flex items-center justify-between text-xs">
+                <span className="font-bold text-gray-700">{t.peopleLabel}</span>
+                <div className="flex items-center space-x-3">
+                  <button
+                    onClick={() => setSplitPeople(Math.max(2, splitPeople - 1))}
+                    className="w-7 h-7 bg-white border border-gray-300 rounded-lg font-bold text-gray-700"
+                  >
+                    -
+                  </button>
+                  <span className="font-black text-sm">{splitPeople}</span>
+                  <button
+                    onClick={() => setSplitPeople(splitPeople + 1)}
+                    className="w-7 h-7 bg-white border border-gray-300 rounded-lg font-bold text-gray-700"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Selector por ítems */}
+            {splitMode === 'custom' && (
+              <div className="bg-amber-50/60 p-3 rounded-2xl mb-4 border border-amber-100 text-left">
+                <p className="text-[11px] font-bold text-gray-700 mb-2">{t.selectItemsLabel}</p>
+                <div className="space-y-1.5">
+                  {t.items.map((item) => {
+                    const checked = selectedItems.includes(item.id);
+                    return (
+                      <div
+                        key={item.id}
+                        onClick={() => toggleItem(item.id)}
+                        className={`flex justify-between items-center p-2 rounded-xl text-xs cursor-pointer border transition ${
+                          checked ? 'bg-white border-black font-bold' : 'bg-transparent border-transparent opacity-60'
+                        }`}
+                      >
+                        <span>{checked ? '✓ ' : ''}{item.name}</span>
+                        <span>{item.price.toFixed(2)} €</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             {/* Detalle de consumos y subtotales */}
             <div className="bg-gray-50 rounded-2xl p-4 mb-4 border border-gray-100 text-left">
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
                 {t.itemsTitle}
               </p>
-              <div className="space-y-2 text-sm text-gray-700">
-                {t.items.map((item, idx) => (
-                  <div key={idx} className="flex justify-between items-center">
-                    <span>{item.name}</span>
-                    <span className="font-medium text-gray-900">{item.price}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="border-t border-dashed border-gray-200 my-3"></div>
-
+              
               <div className="space-y-1.5 text-sm">
-                <div className="flex justify-between font-semibold text-gray-600">
+                <div className="flex justify-between font-semibold text-gray-700">
                   <span>{t.subtotal}</span>
-                  <span>{baseTotalParam.toFixed(2)} €</span>
+                  <span>{userSubtotal.toFixed(2)} €</span>
                 </div>
                 
                 {tipAmount > 0 && (
@@ -258,7 +370,7 @@ function PaymentPage() {
                       )}
                       <span className="text-sm font-black">{percent}%</span>
                       <span className="text-[10px] opacity-80 font-normal">
-                        {((baseTotalParam * percent) / 100).toFixed(2)} €
+                        {((userSubtotal * percent) / 100).toFixed(2)} €
                       </span>
                     </button>
                   );
@@ -328,7 +440,6 @@ function PaymentPage() {
                 <p className="text-xs font-bold text-gray-900 mb-1 text-center">{t.ratingTitle}</p>
                 <p className="text-[11px] text-gray-500 mb-4 text-center">{t.ratingSubtitle}</p>
 
-                {/* Selector de estrellas */}
                 <div className="flex justify-center space-x-2 mb-4">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
@@ -343,7 +454,6 @@ function PaymentPage() {
                   ))}
                 </div>
 
-                {/* Si selecciona 4 o 5 estrellas: Reseña Pública */}
                 {rating !== null && rating >= 4 && (
                   <div className="bg-emerald-50 rounded-xl p-3 text-center border border-emerald-100 animate-fadeIn">
                     <p className="text-xs font-bold text-emerald-900 mb-1">{t.reviewPublicTitle}</p>
@@ -359,7 +469,6 @@ function PaymentPage() {
                   </div>
                 )}
 
-                {/* Si selecciona 3 estrellas o menos: Comentario directo al dueño */}
                 {rating !== null && rating <= 3 && (
                   <div className="bg-amber-50/70 rounded-xl p-3 border border-amber-200 animate-fadeIn space-y-2">
                     <p className="text-xs font-bold text-amber-900">{t.reviewPrivateTitle}</p>
