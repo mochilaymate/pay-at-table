@@ -13,7 +13,7 @@ const translations = {
     splitCustom: 'Pagar por consumos',
     peopleLabel: 'Personas:',
     selectItemsLabel: 'Selecciona lo que consumiste:',
-    itemsTitle: 'Detalle de la cuenta',
+    itemsTitle: 'Detalle de la cuenta (Mesa)',
     subtotal: 'Subtotal a tu cargo',
     tipLabel: 'Propina',
     tipTitle: '¿Quieres dejar propina al equipo?',
@@ -24,7 +24,7 @@ const translations = {
     payButton: 'Pagar con Tarjeta / Apple Pay',
     securePayment: 'Pago 100% seguro y encriptado',
     successTitle: '¡Pago realizado con éxito!',
-    successSubtitle: 'Muchas gracias por tu visita a MIA CAFE.',
+    successSubtitle: 'Tu parte ha sido registrada y descontada de la mesa.',
     ratingTitle: '¿Cómo ha sido tu experiencia?',
     ratingSubtitle: 'Tu opinión nos ayuda a mejorar cada día.',
     reviewPublicTitle: '¡Nos alegra muchísimo!',
@@ -36,11 +36,8 @@ const translations = {
     sendFeedbackBtn: 'Enviar comentario al dueño',
     feedbackSentTitle: '¡Gracias por tus comentarios!',
     feedbackSentText: 'El dueño ha recibido tu mensaje directamente. ¡Esperamos verte pronto de nuevo!',
-    items: [
-      { id: 1, name: '2x Gambas Pil Pil', price: 15.00 },
-      { id: 2, name: '1x Coca Cola', price: 2.50 },
-      { id: 3, name: '1x Pan', price: 1.50 }
-    ]
+    tablePaidTitle: '¡Mesa totalmente pagada!',
+    tablePaidText: 'Todos los consumos de esta mesa han sido liquidados con éxito.'
   },
   en: {
     restaurantName: 'MIA CAFE',
@@ -51,7 +48,7 @@ const translations = {
     splitCustom: 'Pay by item',
     peopleLabel: 'People:',
     selectItemsLabel: 'Select what you had:',
-    itemsTitle: 'Bill details',
+    itemsTitle: 'Table bill details',
     subtotal: 'Your subtotal',
     tipLabel: 'Tip',
     tipTitle: 'Would you like to tip the team?',
@@ -62,7 +59,7 @@ const translations = {
     payButton: 'Pay with Card / Apple Pay',
     securePayment: '100% secure & encrypted payment',
     successTitle: 'Payment successful!',
-    successSubtitle: 'Thank you very much for visiting MIA CAFE.',
+    successSubtitle: 'Your share has been recorded and deducted from the table.',
     ratingTitle: 'How was your experience?',
     ratingSubtitle: 'Your feedback helps us improve every day.',
     reviewPublicTitle: 'We are thrilled!',
@@ -74,11 +71,8 @@ const translations = {
     sendFeedbackBtn: 'Send feedback to the owner',
     feedbackSentTitle: 'Thank you for your feedback!',
     feedbackSentText: 'The owner has received your message directly. We hope to see you again soon!',
-    items: [
-      { id: 1, name: '2x Gambas Pil Pil', price: 15.00 },
-      { id: 2, name: '1x Coca Cola', price: 2.50 },
-      { id: 3, name: '1x Pan', price: 1.50 }
-    ]
+    tablePaidTitle: 'Table fully paid!',
+    tablePaidText: 'All items for this table have been successfully settled.'
   },
   fr: {
     restaurantName: 'MIA CAFE',
@@ -89,7 +83,7 @@ const translations = {
     splitCustom: 'Payer par article',
     peopleLabel: 'Personnes :',
     selectItemsLabel: 'Sélectionnez vos consommations :',
-    itemsTitle: 'Détail de la note',
+    itemsTitle: 'Détail de la table',
     subtotal: 'Votre sous-total',
     tipLabel: 'Pourboire',
     tipTitle: 'Souhaitez-vous laisser un pourboire ?',
@@ -100,7 +94,7 @@ const translations = {
     payButton: 'Payer par Carte / Apple Pay',
     securePayment: 'Paiement 100% sécurisé et crypté',
     successTitle: 'Paiement réussi !',
-    successSubtitle: 'Merci beaucoup d’avoir visité MIA CAFE.',
+    successSubtitle: 'Votre part a été enregistrée et déduite de la table.',
     ratingTitle: 'Comment s’est passée votre expérience ?',
     ratingSubtitle: 'Votre avis nous aide à nous améliorer chaque jour.',
     reviewPublicTitle: 'Nous sommes ravis !',
@@ -112,11 +106,8 @@ const translations = {
     sendFeedbackBtn: 'Envoyer au propriétaire',
     feedbackSentTitle: 'Merci pour vos commentaires !',
     feedbackSentText: 'Le propriétaire a bien reçu votre message. À bientôt !',
-    items: [
-      { id: 1, name: '2x Gambas Pil Pil', price: 15.00 },
-      { id: 2, name: '1x Coca Cola', price: 2.50 },
-      { id: 3, name: '1x Pan', price: 1.50 }
-    ]
+    tablePaidTitle: 'Table entièrement réglée !',
+    tablePaidText: 'Toutes les consommations de cette table ont été payées avec succès.'
   },
   de: {
     restaurantName: 'MIA CAFE',
@@ -127,7 +118,7 @@ const translations = {
     splitCustom: 'Nach Einzelposten bezahlen',
     peopleLabel: 'Personen:',
     selectItemsLabel: 'Wählen Sie Ihre Bestelldetails:',
-    itemsTitle: 'Rechnungsdetails',
+    itemsTitle: 'Tischdetails',
     subtotal: 'Ihr Zwischensumme',
     tipLabel: 'Trinkgeld',
     tipTitle: 'Möchten Sie Trinkgeld geben?',
@@ -138,7 +129,7 @@ const translations = {
     payButton: 'Mit Karte / Apple Pay bezahlen',
     securePayment: '100% sichere und verschlüsselte Zahlung',
     successTitle: 'Zahlung erfolgreich!',
-    successSubtitle: 'Vielen Dank für Ihren Besuch im MIA CAFE.',
+    successSubtitle: 'Ihr Anteil wurde erfasst und vom Tisch abgezogen.',
     ratingTitle: 'Wie war Ihre Erfahrung?',
     ratingSubtitle: 'Ihr Feedback hilft uns, jeden Tag besser zu werden.',
     reviewPublicTitle: 'Es freut uns sehr!',
@@ -150,25 +141,31 @@ const translations = {
     sendFeedbackBtn: 'Feedback an den Inhaber senden',
     feedbackSentTitle: 'Vielen Dank für Ihr Feedback!',
     feedbackSentText: 'Der Inhaber hat Ihre Nachricht direkt erhalten. Bis bald!',
-    items: [
-      { id: 1, name: '2x Gambas Pil Pil', price: 15.00 },
-      { id: 2, name: '1x Coca Cola', price: 2.50 },
-      { id: 3, name: '1x Pan', price: 1.50 }
-    ]
+    tablePaidTitle: 'Tisch komplett bezahlt!',
+    tablePaidText: 'Alle Posten für diesen Tisch wurden erfolgreich beglichen.'
   }
 };
 
 type Lang = 'es' | 'en' | 'fr' | 'de';
 type SplitMode = 'full' | 'equal' | 'custom';
 
+// Estado global simulado en memoria para la demo de la mesa
+let initialTableItems = [
+  { id: 1, name: '2x Gambas Pil Pil', price: 15.00, paid: false },
+  { id: 2, name: '1x Coca Cola', price: 2.50, paid: false },
+  { id: 3, name: '1x Pan', price: 1.50, paid: false }
+];
+
 function PaymentPage() {
   const searchParams = useSearchParams();
   const mesa = searchParams.get('mesa') || '01';
-  const baseTotalParam = parseFloat(searchParams.get('total') || '19.00');
 
   const [lang, setLang] = useState<Lang>('es');
   const [splitMode, setSplitMode] = useState<SplitMode>('full');
   const [splitPeople, setSplitPeople] = useState<number>(2);
+  
+  // Ítems de la mesa
+  const [tableItems, setTableItems] = useState(initialTableItems);
   const [selectedItems, setSelectedItems] = useState<number[]>([1, 2, 3]);
 
   const [tipType, setTipType] = useState<'percent' | 'custom' | 'none'>('percent');
@@ -182,17 +179,23 @@ function PaymentPage() {
 
   const t = translations[lang];
 
-  // Cálculo de Subtotal según modo de división
-  let userSubtotal = baseTotalParam;
-  if (splitMode === 'equal') {
-    userSubtotal = baseTotalParam / (splitPeople || 1);
+  // Calcular total pendiente de la mesa (solo los no pagados)
+  const unpaidItems = tableItems.filter((i) => !i.paid);
+  const remainingTableTotal = unpaidItems.reduce((acc, item) => acc + item.price, 0);
+
+  // Cálculo de Subtotal según modo de división sobre lo pendiente
+  let userSubtotal = remainingTableTotal;
+  if (splitMode === 'full') {
+    userSubtotal = remainingTableTotal;
+  } else if (splitMode === 'equal') {
+    userSubtotal = remainingTableTotal / (splitPeople || 1);
   } else if (splitMode === 'custom') {
-    userSubtotal = t.items
-      .filter((item) => selectedItems.includes(item.id))
+    userSubtotal = tableItems
+      .filter((item) => !item.paid && selectedItems.includes(item.id))
       .reduce((acc, item) => acc + item.price, 0);
   }
 
-  // Cálculo de Propina sobre el Subtotal del cliente
+  // Cálculo de Propina
   let tipAmount = 0;
   if (tipType === 'percent') {
     tipAmount = (userSubtotal * tipValue) / 100;
@@ -209,6 +212,23 @@ function PaymentPage() {
       setSelectedItems([...selectedItems, id]);
     }
   };
+
+  const handlePaymentSuccess = () => {
+    // Marcar como pagados los ítems seleccionados o descontar proporcionalmente
+    if (splitMode === 'custom') {
+      const updated = tableItems.map((item) =>
+        selectedItems.includes(item.id) ? { ...item, paid: true } : item
+      );
+      setTableItems(updated);
+    } else {
+      // Si paga la cuenta completa o parte igual, marcamos todo como pagado para la demo
+      const updated = tableItems.map((item) => ({ ...item, paid: true }));
+      setTableItems(updated);
+    }
+    setIsPaid(true);
+  };
+
+  const allTablePaid = tableItems.every((item) => item.paid);
 
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
@@ -241,7 +261,15 @@ function PaymentPage() {
           </p>
         </div>
 
-        {!isPaid ? (
+        {allTablePaid && isPaid ? (
+          <div className="text-center py-4 animate-fadeIn">
+            <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner">
+              ✓
+            </div>
+            <h2 className="text-xl font-black text-gray-900 mb-1">{t.tablePaidTitle}</h2>
+            <p className="text-xs text-gray-500 mb-6">{t.tablePaidText}</p>
+          </div>
+        ) : !isPaid ? (
           <>
             {/* Opciones de División de Cuenta */}
             <div className="bg-gray-100 p-1.5 rounded-2xl mb-4 flex text-[11px] font-bold">
@@ -271,7 +299,6 @@ function PaymentPage() {
               </button>
             </div>
 
-            {/* Ajuste según el modo de división */}
             {splitMode === 'equal' && (
               <div className="bg-amber-50/60 p-3 rounded-2xl mb-4 border border-amber-100 flex items-center justify-between text-xs">
                 <span className="font-bold text-gray-700">{t.peopleLabel}</span>
@@ -293,19 +320,26 @@ function PaymentPage() {
               </div>
             )}
 
-            {/* Selector por ítems */}
             {splitMode === 'custom' && (
               <div className="bg-amber-50/60 p-3 rounded-2xl mb-4 border border-amber-100 text-left">
                 <p className="text-[11px] font-bold text-gray-700 mb-2">{t.selectItemsLabel}</p>
                 <div className="space-y-1.5">
-                  {t.items.map((item) => {
+                  {tableItems.map((item) => {
+                    if (item.paid) {
+                      return (
+                        <div key={item.id} className="flex justify-between items-center p-2 rounded-xl text-xs bg-gray-200/50 text-gray-400 line-through">
+                          <span>✓ {item.name} (Pagado)</span>
+                          <span>{item.price.toFixed(2)} €</span>
+                        </div>
+                      );
+                    }
                     const checked = selectedItems.includes(item.id);
                     return (
                       <div
                         key={item.id}
                         onClick={() => toggleItem(item.id)}
                         className={`flex justify-between items-center p-2 rounded-xl text-xs cursor-pointer border transition ${
-                          checked ? 'bg-white border-black font-bold' : 'bg-transparent border-transparent opacity-60'
+                          checked ? 'bg-white border-black font-bold text-gray-900' : 'bg-transparent border-transparent opacity-60 text-gray-700'
                         }`}
                       >
                         <span>{checked ? '✓ ' : ''}{item.name}</span>
@@ -317,12 +351,25 @@ function PaymentPage() {
               </div>
             )}
 
-            {/* Detalle de consumos y subtotales */}
+            {/* Detalle visual de la cuenta de la mesa */}
             <div className="bg-gray-50 rounded-2xl p-4 mb-4 border border-gray-100 text-left">
               <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
                 {t.itemsTitle}
               </p>
               
+              {splitMode !== 'custom' && (
+                <div className="space-y-1 mb-2 text-xs text-gray-600">
+                  {tableItems.map((item) => (
+                    <div key={item.id} className={`flex justify-between ${item.paid ? 'line-through text-gray-400' : ''}`}>
+                      <span>{item.name}</span>
+                      <span>{item.price.toFixed(2)} €</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <div className="border-t border-dashed border-gray-200 my-2"></div>
+
               <div className="space-y-1.5 text-sm">
                 <div className="flex justify-between font-semibold text-gray-700">
                   <span>{t.subtotal}</span>
@@ -415,7 +462,7 @@ function PaymentPage() {
               </div>
 
               <button
-                onClick={() => setIsPaid(true)}
+                onClick={handlePaymentSuccess}
                 className="w-full bg-black hover:bg-gray-800 text-white font-bold py-3.5 px-6 rounded-2xl shadow-lg transition active:scale-95 text-sm"
               >
                 {t.payButton}
